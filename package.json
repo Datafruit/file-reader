@@ -1,15 +1,26 @@
 {
-  "name": "reader",
-  "version": "0.1.0",
-  "description": "brosewer file reader strengthen",
+  "name": "next-reader",
+  "version": "0.1.4",
+  "description": "Base classes to read file write by javaScript",
+  "author": "coinxu",
+  "contributors": [
+    "sugo"
+  ],
   "keywords": [
     "file-reader",
     "FileReader",
-    "brosewer file reader"
+    "read file as line",
+    "brosewer file reader",
+    "csv reader"
   ],
+  "main": "./dist",
   "scripts": {
     "webpack": "./node_modules/.bin/webpack",
-    "test": "./node_modules/mocha/bin/mocha ./test/dist/observer/test.js"
+    "test": "./node_modules/mocha/bin/mocha ./test/dist/observer/test.js",
+    "delete:dist": "rm -rf ./dist",
+    "build": "npm run delete:dist && ./node_modules/.bin/babel src --out-dir dist --presets=es2015,stage-0",
+    "prepublish": "npm run build",
+    "publish": "npm run delete:dist"
   },
   "devDependencies": {
     "babel-cli": "^6.2.0",
@@ -20,5 +31,6 @@
     "mocha": "^3.2.0",
     "webpack": "^1.14.0"
   },
-  "repository": "https://github.com/CoinXu/file-reader"
+  "repository": "https://github.com/Datafruit/file-reader",
+  "license": "MIT"
 }

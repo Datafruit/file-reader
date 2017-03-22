@@ -195,3 +195,5 @@ Implements [AbstractObserver](#abstractobserver)
 - destroy()
 - isDestroy()
 
+# License
+MIT
