@@ -32,7 +32,7 @@
 
 ### Simple
 ```js
-import { BrowserFileReader } from 'file-reader'
+import { BrowserFileReader } from 'next-reader'
 const target = document.querySelector('#file')
 target.onchange = () => {
   const file = target.files[0]
@@ -78,7 +78,7 @@ target.onchange = () => {
   
 ### Simple
 ```js
-import { ReadLineAsUint8 } from 'file-reader'
+import { ReadLineAsUint8 } from 'next-reader'
 const Type = ReadLineAsUint8.Type
 const target = document.querySelector('#file')
 target.onchange = () => {
@@ -139,7 +139,7 @@ target.onchange = () => {
 
 ### Simple
 ```js
-import { ReadCsvAsUint8 } from 'file-reader'
+import { ReadCsvAsUint8 } from 'next-reader'
 const target = document.querySelector('#file')
 target.onchange = () => {
   const file = target.files[0]
@@ -178,7 +178,7 @@ target.onchange = () => {
 
 ### Simple
 ```js
-import { ReadCsvWithLines } from 'file-reader'
+import { ReadCsvWithLines } from 'next-reader'
 const target = document.querySelector('#file')
 target.onchange = () => {
   const file = target.files[0]

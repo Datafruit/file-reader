@@ -16,6 +16,11 @@ You can wait for a slice finished then reading the next piece.
 because `JavaScript` is a single-threaded language, so the two ways not
 essentially different.
 
+# Install
+```bash
+npm install next-reader --save-dev
+```
+
 # Reader
 All Reader extends of [BaseReader](#basereader)
 - [BrowserFileReader(file [,options])](#browserfilereader)
@@ -38,7 +43,7 @@ All Reader extends of [BaseReader](#basereader)
 
 ### Simple
 ```js
-import { BrowserFileReader } from 'file-reader'
+import { BrowserFileReader } from 'next-reader'
 const target = document.querySelector('#file')
 target.onchange = () => {
   const file = target.files[0]
@@ -69,7 +74,7 @@ target.onchange = () => {
 
 ### Simple
 ```js
-import { ReadLineAsUint8 } from 'file-reader'
+import { ReadLineAsUint8 } from 'next-reader'
 const Type = ReadLineAsUint8.Type
 const target = document.querySelector('#file')
 target.onchange = () => {
@@ -107,7 +112,7 @@ Simple is same as [ReadLineAsUint8](#readlineasuint8)
 
 ### Simple
 ```js
-import { ReadCsvAsUint8 } from 'file-reader'
+import { ReadCsvAsUint8 } from 'next-reader'
 const target = document.querySelector('#file')
 target.onchange = () => {
   const file = target.files[0]
@@ -136,7 +141,7 @@ target.onchange = () => {
 
 ### Simple
 ```js
-import { ReadCsvWithLines } from 'file-reader'
+import { ReadCsvWithLines } from 'next-reader'
 const target = document.querySelector('#file')
 target.onchange = () => {
   const file = target.files[0]
