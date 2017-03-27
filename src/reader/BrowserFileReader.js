@@ -30,7 +30,16 @@ const ReadTypes = {
   DataURL: 'DataURL'
 }
 
-const FileReader = window.FileReader
+let __window
+let FileReader
+
+try {
+  __window = window
+} catch (e) {
+  __window = global
+} finally {
+  FileReader = __window.FileReader
+}
 
 /**
  * @param {File} file
