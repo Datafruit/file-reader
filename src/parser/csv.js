@@ -50,17 +50,17 @@ export class CSVParser {
     const separator = this.separator
     const quotation = this.quotation
     const length = array.byteLength
+    const last = length - 1
     const result = []
     let point = 0, next, code, start, end
     
     while (point < length) {
       code = array[point]
-      next = point + 1
       
       // `a,"first,second",b` => ["a", "first,second", "b]
       if (code === quotation) {
-        start = next
-        end = array.indexOf(quotation, next)
+        start = point + 1
+        end = array.indexOf(quotation, start)
         
         if (end === -1) {
           throw new ContentFormat(
@@ -75,24 +75,26 @@ export class CSVParser {
       // ,,, => ['','','',]
       else if (code === separator) {
         start = end = point
-        next = end + 1
+        next = point + 1
       }
       // first,second => ["first", "second"]
       else {
         start = point
-        end = array.indexOf(separator, next)
+        end = array.indexOf(separator, start)
+        
         if (end === -1) {
           end = length
         }
-        next = end + 1
+        
+        if (end === last) {
+          next = end
+        } else {
+          next = end + 1
+        }
       }
       
       result.push(array.slice(start, end))
       point = next
-    }
-    
-    if (code === separator) {
-      result.push(new Uint8Array(0))
     }
     
     return result
