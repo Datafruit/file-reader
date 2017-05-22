@@ -21,7 +21,7 @@ export const QUOTATION = {
 }
 
 export class CSVParser {
-  
+
   /**
    * @param {number} [separator] separated of content
    * @param {number} [quotation] mark of content quotes
@@ -30,7 +30,7 @@ export class CSVParser {
     this.separator = separator || SEPARATOR.Comma
     this.quotation = quotation || QUOTATION.DoubleQuotation
   }
-  
+
   /**
    * 解析csv单行,以`,`作为分隔判断,支持 `a, "b,c", d` 这样的格式
    * @param {Uint8Array} array
@@ -53,26 +53,23 @@ export class CSVParser {
     const last = length - 1
     const result = []
     let point = 0, next, code, start, end
-    
+
     while (point < length) {
       code = array[point]
-      
+
       // `a,"first,second",b` => ["a", "first,second", "b]
       if (code === quotation) {
         start = point + 1
         end = array.indexOf(quotation, start)
-        
+
         if (end === -1) {
-          throw new ContentFormat(
-            '数据格式错误: '
-            + String.fromCodePoint.apply(String, array)
-          )
+          throw new Error('数据格式错误: ' + String.fromCodePoint.apply(String, array))
         }
-        
+
         next = end + 2
       }
-      
-      // ,,, => ['','','',]
+
+      // ,,, => ['','','','',]
       else if (code === separator) {
         start = end = point
         next = point + 1
@@ -81,22 +78,28 @@ export class CSVParser {
       else {
         start = point
         end = array.indexOf(separator, start)
-        
+
+        // 最后没有分隔符，直接截取到最后位置
         if (end === -1) {
           end = length
         }
-        
-        if (end === last) {
-          next = end
-        } else {
-          next = end + 1
-        }
+
+        next = end + 1
       }
-      
+
       result.push(array.slice(start, end))
       point = next
     }
-    
+
+    if (array[last] === separator) {
+      result.push(array.slice(0, 0))
+    }
+
     return result
   }
 }
+
+const parse = new CSVParser()
+const buf = new Uint8Array([40, 40, 100, SEPARATOR.Comma, 33, 34, SEPARATOR.Comma, SEPARATOR.Comma, SEPARATOR.Comma])
+const result = parse.parse_line(buf)
+

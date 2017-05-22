@@ -16,7 +16,7 @@
   "main": "./dist",
   "scripts": {
     "webpack": "./node_modules/.bin/webpack",
-    "test": "npm run webpack && ./node_modules/mocha/bin/mocha ./test/dist/observer/test.js",
+    "test": "npm run webpack && ./node_modules/mocha/bin/mocha ./__tests__/dist/observer/test.js",
     "delete:dist": "rm -rf ./dist",
     "build": "npm run delete:dist && ./node_modules/.bin/babel src --out-dir dist --presets=es2015,stage-0",
     "prepublish": "npm run build",

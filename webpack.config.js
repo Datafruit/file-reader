@@ -8,18 +8,18 @@ module.exports = {
   
   entry: {
     
-    'test': './test/test.js',
-    'file': './test/observer/file-reader',
-    'read-line-binary': './test/observer/read-line-binary',
-    'read-line-string': './test/observer/read-line-string',
-    'read-csv': './test/observer/read-csv',
-    'read-csv-with-lines': './test/observer/read-csv-with-lines'
+    'test': './__tests__/index.js',
+    'file': './__tests__/observer/file-reader',
+    'read-line-binary': './__tests__/observer/read-line-binary',
+    'read-line-string': './__tests__/observer/read-line-string',
+    'read-csv': './__tests__/observer/read-csv',
+    'read-csv-with-lines': './__tests__/observer/read-csv-with-lines'
   },
   
   cache: true,
   
   output: {
-    path: path.join(process.cwd(), 'test/dist/observer'),
+    path: path.join(process.cwd(), '__tests__/dist/observer'),
     publicPath: '/dist/',
     filename: '[name].js',
     sourceMapFilename: '[name].map'
