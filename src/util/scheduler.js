@@ -79,7 +79,7 @@ export class Scheduler {
   
   /**
    * 任务是否排满
-   * @returns {boolean}
+   * @returns {Boolean}
    */
   tight () {
     return this.scheduled.length > this.max_threads
@@ -87,7 +87,7 @@ export class Scheduler {
   
   /**
    * 缓存是否清空
-   * @returns {boolean}
+   * @returns {Boolean}
    */
   drain () {
     return this.buffer.length === 0
@@ -95,7 +95,7 @@ export class Scheduler {
   
   /**
    * 缓存是否装满
-   * @returns {boolean}
+   * @returns {Boolean}
    */
   overflowed () {
     return this.buffer.length > this.max_threads

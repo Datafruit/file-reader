@@ -28,7 +28,7 @@ export class Queue {
   /**
    * 压入数据,如果成功,返回`true`,失败返回 `false`
    * @param data
-   * @returns {boolean}
+   * @returns {Boolean}
    */
   queue (data) {
     if (this.full()) {
@@ -56,7 +56,7 @@ export class Queue {
 
   /**
    * 是否达到最大缓存
-   * @returns {boolean}
+   * @returns {Boolean}
    */
   full () {
     return this.undequeued() === this._max_queue
@@ -64,7 +64,7 @@ export class Queue {
 
   /**
    * 未读出队列的数量
-   * @returns {number}
+   * @returns {Number}
    */
   undequeued () {
     return this._total - this._point
@@ -72,7 +72,7 @@ export class Queue {
 
   /**
    * 是否全部执行
-   * @returns {boolean}
+   * @returns {Boolean}
    */
   done () {
     return this.undequeued() === 0
@@ -93,7 +93,7 @@ export class Queue {
 
   /**
    * 指针回滚
-   * @returns {number}
+   * @returns {Number}
    */
   rollback () {
     if (this._point > 0) {
@@ -104,7 +104,7 @@ export class Queue {
 
   /**
    * 指针前进
-   * @returns {number}
+   * @returns {Number}
    */
   forward () {
     if (this._point < this._total) {

@@ -6,10 +6,10 @@ import { BaseReader } from '../base/BaseReader'
 import { inherits } from '../util/util'
 
 /**
- * @property {string} [encode]
- * @property {number} [read_size]
- * @property {number} [chunk_size]
- * @property {number} [concurrency]
+ * @property {String} [encode]
+ * @property {Number} [read_size]
+ * @property {Number} [chunk_size]
+ * @property {Number} [concurrency]
  * @mixin ReaderOptions
  */
 const DefOpt = {
@@ -43,7 +43,7 @@ try {
 
 /**
  * @param {File} file
- * @param {object} [options]
+ * @param {Object} [options]
  * @extends BaseReader
  * @constructor
  */
@@ -59,7 +59,7 @@ const BrowserFileReader = function (file, options) {
 inherits(BrowserFileReader, BaseReader)
 
 /**
- * @param {string} type
+ * @param {String} type
  * @return {BrowserFileReader}
  * @private
  */
@@ -109,7 +109,7 @@ BrowserFileReader.prototype._read = function () {
 
 /**
  * 读取一次数据，返回值为boolean，表示是否读取成功
- * @return {boolean}
+ * @return {Boolean}
  * @private
  */
 BrowserFileReader.prototype._next = function () {
@@ -135,8 +135,8 @@ BrowserFileReader.prototype._next = function () {
 
 /**
  * 切片文件
- * @param {number} start
- * @param {number} end
+ * @param {Number} start
+ * @param {Number} end
  * @return {BrowserFileReader}
  * @private
  */
@@ -156,7 +156,7 @@ BrowserFileReader.prototype._slice = function (start, end) {
 }
 
 /**
- * @return {boolean}
+ * @return {Boolean}
  */
 BrowserFileReader.prototype.done = function () {
   return this.already === this.options.read_size
@@ -183,7 +183,7 @@ BrowserFileReader.prototype._onReadData = function () {
  * @param record
  * @param sequence
  * @override
- * @return {boolean}
+ * @return {Boolean}
  */
 BrowserFileReader.prototype.validate = function (record, sequence) {
   return record.reader.readyState === FileReader.DONE
@@ -192,7 +192,7 @@ BrowserFileReader.prototype.validate = function (record, sequence) {
 /**
  * @param {*} record
  * @override
- * @param {number} [sequence]
+ * @param {Number} [sequence]
  */
 BrowserFileReader.prototype.result = function (record, sequence) {
   return record.reader.result
@@ -202,7 +202,7 @@ BrowserFileReader.prototype.result = function (record, sequence) {
  * @param record
  * @param size
  * @override
- * @return {boolean}
+ * @return {Boolean}
  */
 BrowserFileReader.prototype.isLastSnippet = function (record, size) {
   return record.end === this.options.read_size

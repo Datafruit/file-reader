@@ -192,7 +192,7 @@ export class UTF8Parser {
    * @static
    * @param bytes
    * @param len - bytes.length
-   * @returns {number}
+   * @returns {Number}
    */
   static get_point (bytes, len) {
     
@@ -278,7 +278,7 @@ export class UTF8Parser {
   
   /**
    * @static
-   * @param {string} string
+   * @param {String} string
    * @return {Uint8Array}
    */
   static string_to_utf8_uint8 (string) {

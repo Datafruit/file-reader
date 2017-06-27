@@ -10,7 +10,7 @@ export class Base64Parser {
   
   /**
    * @param {Uint8Array} buffer
-   * @return {string}
+   * @return {String}
    */
   encode (buffer) {
     const len = buffer.byteLength

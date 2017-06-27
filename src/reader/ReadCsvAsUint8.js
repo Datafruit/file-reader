@@ -3,6 +3,7 @@ import { UTF8Parser } from '../parser/utf8'
 import { inherits } from '../util/util'
 import { BaseReader } from '../base/BaseReader'
 import { ReadLineAsUint8 } from './ReadLineAsUint8'
+import { CsvCompleteLine } from '../util/CsvCompleteLine'
 const LINE_MARK = ReadLineAsUint8.Type.line
 
 /**
@@ -19,6 +20,7 @@ const ReadCsvAsUint8 = function (file, options) {
   this.reader = new ReadLineAsUint8(file, options)
   this.csv_parser = new CSVParser(options.separator, options.quotation)
   this.utf8_parser = new UTF8Parser()
+  this.checker = new CsvCompleteLine(options.quotation, options.separator)
   this._listen()
 }
 
@@ -43,22 +45,34 @@ ReadCsvAsUint8.prototype._listen = function () {
  * @private
  */
 ReadCsvAsUint8.prototype._onNext = function (record) {
+
+  // TODO 检测是否是完整的csv行
   const type = record.type
   if (type === LINE_MARK) return this
-  
+
   const { data, no, size } = record
   const start = no - data.length + 1
   const utf8 = this.utf8_parser
   const csv = this.csv_parser
-  
+
   if (data.length === 0) return this
   if (start === 1) data[0].line = utf8.filterOutBOM(data[0].line).array
-  
-  const lines = data.map((rc, i) => ({
-    fields: csv.parse_line(rc.line),
-    size: rc.size,
-    no: start + i
-  }))
+
+  const checker = this.checker
+  const lines = []
+  const end = data.length
+
+  for (let i = 0, rc, arr; i < end; i++) {
+    rc = data[i]
+    arr = checker.press(rc.line)
+    if (arr.byteLength === 0) continue
+
+    lines.push({
+      fields: csv.parse_line(arr),
+      size: rc.size,
+      no: start + i
+    })
+  }
   
   this.enqueue({ lines, size })
   this.onReadData()

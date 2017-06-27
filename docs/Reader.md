@@ -1,8 +1,8 @@
 # ReaderOptions
-+ {string} encode - 文件编码，默认为`utf8`
-+ {number} read_size - 总读取量，默认为`file.size`
-+ {number} concurrency - 并发读取数，默认为`1`
-+ {number} chunk_size - 每个分片大小，默认为`1 << 16`
++ {String} encode - 文件编码，默认为`utf8`
++ {Number} read_size - 总读取量，默认为`file.size`
++ {Number} concurrency - 并发读取数，默认为`1`
++ {Number} chunk_size - 每个分片大小，默认为`1 << 16`
 
 # BrowserFileReader(file, [options])
 浏览器上的文件读取类，需要浏览器支持
@@ -54,7 +54,7 @@ target.onchange = () => {
 
 # LineReaderOptions
 ### Mixin [ReaderOptions](#readeroptions)
-+ {boolean} ignore_line_break - 输出结果是否忽略换行符，默认为true 
++ {Boolean} ignore_line_break - 输出结果是否忽略换行符，默认为true
 
 # ReadLineAsUint8(file, [options])
 按行读取一个文件，输出结果为`unsigned 8 bit`类型
@@ -73,8 +73,8 @@ target.onchange = () => {
 
 ### 静态属性
 + Type
-  - {string} line
-  - {string} lines
+  - {String} line
+  - {String} lines
   
 ### Simple
 ```js
@@ -116,8 +116,8 @@ target.onchange = () => {
 
 ### 静态属性
 + Type
-  - {string} line
-  - {string} lines
+  - {String} line
+  - {String} lines
   
 ### Simple 参考 [ReadLineAsUint8](#readlineasuint8) 的`example`  
 
@@ -164,7 +164,7 @@ target.onchange = () => {
 
 ### 参数说明
 + {File} file
-+ {number} lines - 需要读取多少行
++ {Number} lines - 需要读取多少行
 + {[LineReaderOptions](#linereaderoptions)} [options]
 
 ### Extends

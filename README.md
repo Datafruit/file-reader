@@ -30,10 +30,10 @@ All Reader extends of [BaseReader](#basereader)
 - [ReadCsvWithLines(file, lines, [,options])](#readcsvwithlines)
 
 # ReaderOptions
-+ {string} encode - default `utf8`
-+ {number} read_size - default `file.size`
-+ {number} concurrency - default `1`
-+ {number} chunk_size - file's encode. default `utf8`, only support`utf8`，default `1 << 16`
++ {String} encode - default `utf8`
++ {Number} read_size - default `file.size`
++ {Number} concurrency - default `1`
++ {Number} chunk_size - file's encode. default `utf8`, only support`utf8`，default `1 << 16`
 
 # BrowserFileReader(file, [options])
 
@@ -65,7 +65,7 @@ target.onchange = () => {
 
 # LineReaderOptions
 ### Mixin [ReaderOptions](#readeroptions)
-+ {boolean} ignore_line_break - default `true`
++ {Boolean} ignore_line_break - default `true`
 
 # ReadLineAsUint8(file, [options])
 ### Params
@@ -136,7 +136,7 @@ target.onchange = () => {
 
 ### Params
 + {File} file
-+ {number} lines - lines to read
++ {Number} lines - lines to read
 + {[LineReaderOptions](#linereaderoptions)} [options]
 
 ### Simple

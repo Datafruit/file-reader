@@ -8,7 +8,7 @@ import { inherits, arrayLikeToArray } from '../util/util'
 import { Queue } from '../util/queue'
 
 /**
- * @param {number} [concurrency]
+ * @param {Number} [concurrency]
  * @extends AbstractReader
  * @extends BaseObservable
  * @constructor
@@ -53,7 +53,7 @@ BaseReader.prototype.resume = function () {
 
 /**
  * @override
- * @return {boolean}
+ * @return {Boolean}
  */
 BaseReader.prototype.readable = function () {
   return this._readable && !this.queue.full()
@@ -122,8 +122,8 @@ BaseReader.prototype.onReadComplete = function () {
 /**
  * @override
  * @param {*} data
- * @param {number} [sequence]
- * @return {boolean}
+ * @param {Number} [sequence]
+ * @return {Boolean}
  */
 BaseReader.prototype.validate = function (data, sequence) {
   return sequence !== void 0
@@ -132,7 +132,7 @@ BaseReader.prototype.validate = function (data, sequence) {
 /**
  * @override
  * @param {*} data
- * @param {number} [sequence]
+ * @param {Number} [sequence]
  * @return {*}
  */
 BaseReader.prototype.result = function (data, sequence) {
@@ -141,8 +141,8 @@ BaseReader.prototype.result = function (data, sequence) {
 
 /**
  * @param {*} data
- * @param {number} [sequence]
- * @return {boolean}
+ * @param {Number} [sequence]
+ * @return {Boolean}
  */
 BaseReader.prototype.isLastSnippet = function (data, sequence) {
   return false
