@@ -2,8 +2,6 @@
  * Created by coin on 05/01/2017.
  */
 
-import { ContentFormat } from '../exceptions'
-
 export const FILE_ORIGIN = {
   utf8: 0
 }
@@ -23,8 +21,8 @@ export const QUOTATION = {
 export class CSVParser {
 
   /**
-   * @param {number} [separator] separated of content
-   * @param {number} [quotation] mark of content quotes
+   * @param {Number} [separator] separated of content
+   * @param {Number} [quotation] mark of content quotes
    */
   constructor (separator, quotation) {
     this.separator = separator || SEPARATOR.Comma
@@ -98,8 +96,4 @@ export class CSVParser {
     return result
   }
 }
-
-const parse = new CSVParser()
-const buf = new Uint8Array([40, 40, 100, SEPARATOR.Comma, 33, 34, SEPARATOR.Comma, SEPARATOR.Comma, SEPARATOR.Comma])
-const result = parse.parse_line(buf)
 

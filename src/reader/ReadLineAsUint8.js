@@ -7,8 +7,10 @@ import { BaseReader } from '../base/BaseReader'
 import { inherits, short_id } from '../util/util'
 
 /**
- * @property {boolean} ignore_line_break
- * @mixes {ReaderOptions}
+ * @property {Boolean} ignore_line_break
+ * @property {Number} separator
+ * @property {Number} quotation
+ * @mixes ReaderOptions
  * @mixin LineReaderOptions
  */
 const DefOpt = Object.assign({ ignore_line_break: true }, ReaderOpt)
@@ -66,11 +68,11 @@ ReadLineAsUint8.prototype._listen = function () {
  */
 ReadLineAsUint8.prototype._receive = function (array_buffer) {
   const array = this._concat(array_buffer)
-  
+
   if (array === null) {
     return this
   }
-  
+
   this._send_lines(this.options.ignore_line_break
     ? this._ignore_line_break(array)
     : this._normal_receive(array)
@@ -85,11 +87,11 @@ ReadLineAsUint8.prototype._receive = function (array_buffer) {
  */
 ReadLineAsUint8.prototype._concat = function (array_buffer) {
   const buf_len = array_buffer.byteLength
-  
+
   if (buf_len === 0) {
     return null
   }
-  
+
   const cache = this.cache
   const length = cache.length + buf_len
   const array = new Uint8Array(length)
@@ -112,7 +114,7 @@ ReadLineAsUint8.prototype._ignore_line_break = function (array) {
   let size = 0
   let point = 0
   let code
-  
+
   while (point < length) {
     code = array[point++]
     size++
@@ -124,9 +126,9 @@ ReadLineAsUint8.prototype._ignore_line_break = function (array) {
       line.push(code)
     }
   }
-  
+
   this.cache = line
-  
+
   return lines
 }
 
@@ -143,7 +145,7 @@ ReadLineAsUint8.prototype._normal_receive = function (array) {
   let size = 0
   let point = 0
   let code
-  
+
   while (point < length) {
     code = array[point++]
     size++
@@ -154,9 +156,9 @@ ReadLineAsUint8.prototype._normal_receive = function (array) {
       size = 0
     }
   }
-  
+
   this.cache = line
-  
+
   return lines
 }
 
@@ -170,13 +172,13 @@ ReadLineAsUint8.prototype._send_lines = function (lines) {
   let array = void 0
   let total_size = 0
   let total_line = this.total_lines
-  
+
   if (lines.length > 0) {
     lines.forEach(line => {
       total_size += line.size
       array = new Uint8Array(line.line)
       lines_record.push({ line: array, size: line.size })
-      
+
       this.enqueue({
         type: Type.line,
         data: array,
@@ -185,9 +187,9 @@ ReadLineAsUint8.prototype._send_lines = function (lines) {
       })
       this.onReadData()
     })
-    
+
     this.total_lines = total_line
-    
+
     this.enqueue({
       type: Type.lines,
       data: lines_record,

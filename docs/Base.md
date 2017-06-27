@@ -62,7 +62,7 @@ obs.subscribe(ob)
 + [BaseObservable](#baseobservable)
 
 ### 参数说明
-+ concurrency {number} - 最大并发数，默认为1
++ concurrency {Number} - 最大并发数，默认为1
 
 ### override
 + read() : `BaseReader`

@@ -9,8 +9,8 @@ import { inherits } from '../util/util'
 
 /**
  * @param file
- * @param {number} lines
- * @param {} options
+ * @param {Number} lines
+ * @param {LineReaderOptions} options
  * @constructor
  */
 const ReadCsvWithLines = function (file, lines, options) {
@@ -48,15 +48,15 @@ ReadCsvWithLines.prototype._receive = function (record) {
   const total = this.total
   const len = lines.length
   let already = this.already
-  
+
   if (already >= total) return this
   if (already + len > total) this.pause()
-  
+
   const need = total - already
   const num = need <= len ? need : len
   const next = []
   const parser = this.utf8_parser
-  
+
   for (let i = 0, r; i < num; i++) {
     r = lines[i]
     next.push({
@@ -64,10 +64,10 @@ ReadCsvWithLines.prototype._receive = function (record) {
       fields: r.fields.map(f => String.fromCodePoint.apply(String, parser.parse(f).character))
     })
   }
-  
+
   this.enqueue({ lines: next, size })
   this.onReadData()
-  
+
   already = already + num
   if (already >= total) this.onReadComplete()
   this.already = already
