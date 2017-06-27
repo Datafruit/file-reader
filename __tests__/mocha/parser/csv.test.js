@@ -62,6 +62,23 @@ describe('CSVParser', () => {
       })
     })
 
+    describe('multi lines', function () {
+      const parser = new CSVParser()
+      const str = `1,"2\n3\n4",5`
+      const result = ['1', '2\n3\n4', '5']
+      it(`parse [${str}] should equal ${JSON.stringify(result)}'`, function (done) {
+        const ret = parser.parse_line(UTF8Parser.string_to_utf8_uint8(str))
+        equal(ret.length, result.length)
+        ret.forEach(function (v, i) {
+          equal(
+            String.fromCharCode.apply(String, v),
+            result[i]
+          )
+        })
+        done()
+      })
+    })
+
     describe('complex', function () {
       const cvs_parser = new CSVParser()
       const str = 'a,b,"c,d",,,,e,f,,,,j'

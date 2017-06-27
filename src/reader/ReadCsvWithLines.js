@@ -14,7 +14,7 @@ import { inherits } from '../util/util'
  * @constructor
  */
 const ReadCsvWithLines = function (file, lines, options) {
-  BaseReader.call(this, options)
+  BaseReader.call(this, options.concurrency)
   this.file = file
   this.total = lines
   this.reader = new ReadCsvAsUint8(file, options)
