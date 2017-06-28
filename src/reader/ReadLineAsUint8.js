@@ -52,7 +52,11 @@ ReadLineAsUint8.prototype._listen = function () {
     (array_buffer, sequence) => this._receive(array_buffer),
     (message, already, read_size) => this.onReadError(message, already, read_size),
     () => {
-      if (this.cache.length) this._receive(new Uint8Array(this.cache))
+      if (this.cache.length) {
+        const buf = new Uint8Array(this.cache.concat(LF))
+        this.cache = []
+        this._receive(buf)
+      }
       this.onReadComplete()
     }
   )
@@ -118,6 +122,7 @@ ReadLineAsUint8.prototype._ignore_line_break = function (array) {
   while (point < length) {
     code = array[point++]
     size++
+    // TODO 性能优化，试着减少判断
     if (code === LF) {
       lines.push({ line, size })
       line = []
