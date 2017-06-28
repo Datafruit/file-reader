@@ -23,6 +23,7 @@ export class Queue {
     this._queue = queue
     this._point = 0
     this._total = queue.length
+    return this
   }
 
   /**

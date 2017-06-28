@@ -3,6 +3,7 @@
   "version": "0.1.9",
   "description": "Base classes to read file write by javaScript",
   "author": "coinxu",
+  "typings": "index.d.ts",
   "contributors": [
     "sugo"
   ],
