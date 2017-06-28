@@ -21,6 +21,7 @@ const ReadCsvAsUint8 = function (file, options) {
   this.csv_parser = new CSVParser(options.separator, options.quotation)
   this.utf8_parser = new UTF8Parser()
   this.checker = new CsvCompleteLine(options.quotation, options.separator)
+  this.count = 0
   this._listen()
 }
 
@@ -61,8 +62,8 @@ ReadCsvAsUint8.prototype._onNext = function (record) {
   const checker = this.checker
   const lines = []
   const end = data.length
-
-  for (let i = 0, rc, arr; i < end; i++) {
+  let i = 0, rc, arr
+  for (; i < end; i++) {
     rc = data[i]
     arr = checker.press(rc.line)
     if (arr.byteLength === 0) continue
@@ -70,10 +71,10 @@ ReadCsvAsUint8.prototype._onNext = function (record) {
     lines.push({
       fields: csv.parse_line(arr),
       size: rc.size,
-      no: start + i
+      no: ++this.count
     })
   }
-  
+
   this.enqueue({ lines, size })
   this.onReadData()
   return this
