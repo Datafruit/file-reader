@@ -2,7 +2,7 @@
  * Created by coin on 21/12/2016.
  */
 
-import { UCS2Parer } from './ucs2'
+import { UCS2Parser } from './ucs2'
 import { dynamic_uint8_array } from '../util/dynamic-uint8array'
 
 const BYTE_RANGE = {
@@ -35,7 +35,7 @@ export class UTF8Parser {
     this.prev_buffer = null
     this.bytes = 0
     this.utf8_bom = [0x00ef, 0x00bb, 0x00bf]
-    this.parser = new UCS2Parer()
+    this.parser = new UCS2Parser()
   }
 
   /**
@@ -286,6 +286,6 @@ export class UTF8Parser {
    * @return {Uint8Array}
    */
   static string_to_utf8_uint8 (string) {
-    return UTF8Parser.unicode_to_utf8_uint8(UCS2Parer.decode(string))
+    return UTF8Parser.unicode_to_utf8_uint8(UCS2Parser.decode(string))
   }
 }

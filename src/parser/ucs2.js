@@ -7,7 +7,7 @@
  */
 
 const stringFromCharCode = String.fromCharCode
-export class UCS2Parer {
+export class UCS2Parser {
   static decode (str) {
     const output = []
     let counter = 0
