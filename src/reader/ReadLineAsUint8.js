@@ -170,6 +170,7 @@ ReadLineAsUint8.prototype._normal_receive = function (array) {
 /**
  * 发送行数据
  * @param lines
+ * @return {ReadLineAsUint8}
  * @private
  */
 ReadLineAsUint8.prototype._send_lines = function (lines) {
@@ -203,6 +204,7 @@ ReadLineAsUint8.prototype._send_lines = function (lines) {
     })
     this.onReadData()
   }
+  return this
 }
 
 /**

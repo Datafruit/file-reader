@@ -20,6 +20,7 @@ export const dynamic_uint8_array = (size) => {
       array.set(arr, point)
       point += len
     })
+    return point
   }
   
   const get = () => {

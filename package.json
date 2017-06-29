@@ -3,7 +3,6 @@
   "version": "0.1.9",
   "description": "Base classes to read file write by javaScript",
   "author": "coinxu",
-  "typings": "index.d.ts",
   "contributors": [
     "sugo"
   ],
@@ -15,6 +14,7 @@
     "csv reader"
   ],
   "main": "./dist",
+  "typings": "./@type/file-reader.d.ts",
   "scripts": {
     "webpack": "./node_modules/.bin/webpack",
     "test": "npm run webpack && ./node_modules/mocha/bin/mocha ./__tests__/dist/observer/test.js",
@@ -24,6 +24,7 @@
     "publish": "npm run delete:dist"
   },
   "devDependencies": {
+    "typescript": "^2.4",
     "babel-cli": "^6.2.0",
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",

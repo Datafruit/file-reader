@@ -1,0 +1,16 @@
+{
+  "files": [
+    "./@type/file-reader.d.ts",
+    "./@type/test.ts"
+  ],
+  "compilerOptions": {
+    "module": "es6",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "noImplicitAny": true,
+    "noImplicitThis": false,
+    "strictNullChecks": true
+  }
+}

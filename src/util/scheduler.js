@@ -16,8 +16,8 @@
  *
  */
 export class Scheduler {
-  constructor (max_threads) {
-    this.max_threads = max_threads
+  constructor (max_tasks) {
+    this.max_tasks = max_tasks
     this.buffer = []
     this.subscribers = []
     this.scheduled = []
@@ -46,11 +46,11 @@ export class Scheduler {
   }
   
   dispose () {
-    const { buffer, subscribers, scheduled, max_threads } = this
+    const { buffer, subscribers, scheduled, max_tasks } = this
     let data
     let state = false
     
-    while (scheduled.length < max_threads && buffer.length > 0) {
+    while (scheduled.length < max_tasks && buffer.length > 0) {
       state = true
       data = buffer[0]
       scheduled.push(data)
@@ -82,7 +82,7 @@ export class Scheduler {
    * @returns {Boolean}
    */
   tight () {
-    return this.scheduled.length > this.max_threads
+    return this.scheduled.length > this.max_tasks
   }
   
   /**
@@ -98,7 +98,7 @@ export class Scheduler {
    * @returns {Boolean}
    */
   overflowed () {
-    return this.buffer.length > this.max_threads
+    return this.buffer.length > this.max_tasks
   }
   
   /**
