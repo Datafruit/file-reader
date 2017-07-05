@@ -1,6 +1,6 @@
 {
   "name": "next-reader",
-  "version": "0.1.10",
+  "version": "0.1.13",
   "description": "Base classes to read file write by javaScript",
   "author": "coinxu",
   "contributors": [
@@ -14,7 +14,7 @@
     "csv reader"
   ],
   "main": "./dist",
-  "typings": "./@type/file-reader.d.ts",
+  "typings": "./@type/index.d.ts",
   "scripts": {
     "webpack": "./node_modules/.bin/webpack",
     "test": "npm run webpack && ./node_modules/mocha/bin/mocha ./__tests__/dist/observer/test.js",
