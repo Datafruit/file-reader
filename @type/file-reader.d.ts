@@ -10,7 +10,6 @@ declare namespace Reader {
     random (min: number, max: number): number
 
     random_str (total: number): string
-
     gen_short_id (pre_fix_len?: number): () => string
 
     short_id (): string
@@ -209,7 +208,7 @@ declare namespace Reader {
 
     entry (arr: Uint8Array): UTF8ParserStruct | UTF8Parser
 
-    filterOutBOM (arr: Uint8Array): { point: number, array: Uint8Array }
+    filterOutBOM (arr: Uint8Array): {point: number, array: Uint8Array}
 
     done (): boolean
 
