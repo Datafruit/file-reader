@@ -14,6 +14,7 @@ import { inherits } from '../util/util'
  * @constructor
  */
 const ReadCsvWithLines = function (file, lines, options) {
+  options = options || {}
   BaseReader.call(this, options.concurrency)
   this.file = file
   this.total = lines

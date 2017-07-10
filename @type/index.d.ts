@@ -137,15 +137,15 @@ declare namespace Reader {
   }
 
   interface ObserverConstructor {
-    new<T,E> (): Observable<T, E>
+    new<T, E> (): Observable<T, E>
   }
 
   export const Observer: ObserverConstructor
 
   interface ObserverConstructor {
-    new<T,E> (onNext?: OnNext<T>,
+    new<T, E> (onNext?: OnNext<T>,
       onError?: OnError<E>,
-      onComplete?: OnComplete): Observable<E,E>
+      onComplete?: OnComplete): Observable<E, E>
     isObserver (arg: any): boolean
   }
 
@@ -159,8 +159,8 @@ declare namespace Reader {
     readonly prototype: Observer<T, E>
 
     subscribe (observerOrOnNext: Observer<T, E> | OnNext<T>,
-      onError: OnError<E>,
-      onComplete: OnComplete): Observable<T, E>
+      onError?: OnError<E>,
+      onComplete?: OnComplete): Observable<T, E>
     subscribeOnNext (data: T): Observable<T, E>
     subscribeOnError (err: E): Observable<T, E>
     subscribeOnComplete (): Observable<T, E>
@@ -194,7 +194,7 @@ declare namespace Reader {
 
     parse (arr: Uint8Array): UTF8ParserStruct
     entry (arr: Uint8Array): UTF8ParserStruct | UTF8Parser
-    filterOutBOM (arr: Uint8Array): {point: number, array: Uint8Array}
+    filterOutBOM (arr: Uint8Array): { point: number, array: Uint8Array }
     done (): boolean
   }
 
@@ -269,15 +269,22 @@ declare namespace Reader {
    * export Base Class
    * ====================
    */
-  export interface BaseObserver<T, E> extends Observer<T,E> {
 
+  interface BaseObserverConstructor {
+    new<T, E>(): Observer<T, E>
   }
-  export interface BaseObservable<T, E> extends Observable<T, E> {
 
+  interface BaseObservableConstructor {
+    new<T, E>(): Observable<T, E>
   }
-  export interface BaseReader<T, E> extends Reader<T,E> {
 
+  interface BaseReaderConstructor {
+    new<T, E>(): Reader<T, E>
   }
+
+  export const BaseObserver: BaseObserverConstructor
+  export const BaseObservable: BaseObservableConstructor
+  export const BaseReader: BaseReaderConstructor
 
   /**
    * ====================
@@ -301,7 +308,7 @@ declare namespace Reader {
     end: number
   }
 
-  interface BrowserFileReader<E> extends BaseReader<BrowserFileReaderStruct, E> {
+  interface BrowserFileReader<E> extends Reader<BrowserFileReaderStruct, E> {
     readonly options: BrowserFileReaderOptions
     readonly file: File
     readonly already: number
@@ -351,7 +358,7 @@ declare namespace Reader {
     size: number
   }
 
-  interface ReadLineAsUint8<E> extends BaseReader<ReadLineStruct, E> {
+  interface ReadLineAsUint8<E> extends Reader<ReadLineStruct, E> {
 
     readonly options: LineReaderOptions
     readonly file: File
@@ -380,7 +387,7 @@ declare namespace Reader {
    * ====================
    */
 
-  interface ReadLineAsString<E> extends BaseReader<ReadLineStruct, E> {
+  interface ReadLineAsString<E> extends Reader<ReadLineStruct, E> {
 
     readonly file: File
     readonly options: LineReaderOptions
@@ -403,7 +410,7 @@ declare namespace Reader {
    * ====================
    */
 
-  interface ReadCsvAsUint8<E> extends BaseReader<ReadLineStruct, E> {
+  interface ReadCsvAsUint8<E> extends Reader<ReadLineStruct, E> {
 
     readonly file: File
     readonly options: LineReaderOptions
@@ -429,7 +436,7 @@ declare namespace Reader {
    * ====================
    */
 
-  interface ReadCsvWithLines<E> extends BaseReader<ReadLineStruct, E> {
+  interface ReadCsvWithLines<E> extends Reader<ReadLineStruct, E> {
 
     readonly file: File
     readonly total: number

@@ -101,8 +101,14 @@ bool = sche.reEntry('s').drain()
 bool = sche.overflowed()
 bool = sche.accomplish()
 
-
 // ====================
 // Observer
 // ====================
 // TODO
+
+// ====================
+// Reader
+// ====================
+let file = new File([new ArrayBuffer(1)], 'a.text')
+let reader = new BrowserFileReader<string>(file)
+reader.subscribe((data) => console.log(data.reader))
