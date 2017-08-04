@@ -4,3 +4,4 @@ dist
 test/dist
 *.log*
 temp
+yarn.lock
