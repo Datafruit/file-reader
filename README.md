@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/Datafruit/file-reader.svg?branch=master)](https://travis-ci.org/Datafruit/file-reader)
+[![npm version](https://badge.fury.io/js/next-reader.svg)](https://badge.fury.io/js/next-reader)
 
 [中文](./docs/index.md)
 
