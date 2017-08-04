@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/Datafruit/file-reader.svg?branch=master)](https://travis-ci.org/Datafruit/file-reader)
+
 [中文](./docs/index.md)
 
 # About

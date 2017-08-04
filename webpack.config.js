@@ -5,9 +5,8 @@
 const path = require('path')
 
 module.exports = {
-  
+
   entry: {
-    
     'test': './__tests__/index.js',
     'file': './__tests__/observer/file-reader',
     'read-line-binary': './__tests__/observer/read-line-binary',
@@ -15,16 +14,16 @@ module.exports = {
     'read-csv': './__tests__/observer/read-csv',
     'read-csv-with-lines': './__tests__/observer/read-csv-with-lines'
   },
-  
+
   cache: true,
-  
+
   output: {
     path: path.join(process.cwd(), '__tests__/dist/observer'),
     publicPath: '/dist/',
     filename: '[name].js',
     sourceMapFilename: '[name].map'
   },
-  
+
   module: {
     loaders: [
       {
@@ -35,6 +34,6 @@ module.exports = {
       }
     ]
   },
-  
+
   devtool: 'eval-source-map'
 };
