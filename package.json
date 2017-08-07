@@ -1,7 +1,7 @@
 {
   "name": "next-reader",
-  "version": "0.1.17",
-  "description": "Base classes to read file write by javaScript",
+  "version": "0.1.18",
+  "description": "Base classe for read big file write by javaScript",
   "author": "coinxu",
   "contributors": [
     "sugo"
