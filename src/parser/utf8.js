@@ -285,7 +285,7 @@ export class UTF8Parser {
    * @param {String} string
    * @return {Uint8Array}
    */
-  static stringToUTF8UInt8 (string) {
+  static stringToUTF8Uint8 (string) {
     return UTF8Parser.unicodeToUTF8Uint8(UCS2Parser.decode(string))
   }
 }

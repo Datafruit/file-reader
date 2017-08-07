@@ -61,11 +61,11 @@ describe('UTF8Parer', () => {
     })
   })
   
-  describe('.stringToUTF8UInt8', () => {
+  describe('.stringToUTF8Uint8', () => {
     const min = 0, max = 0b11111111
     
     let result = getString(ECODEING.UNICODE)
-    let utf8_code = UTF8Parser.stringToUTF8UInt8(result.string)
+    let utf8_code = UTF8Parser.stringToUTF8Uint8(result.string)
     let array = typeArrayToArray(utf8_code)
     let parser = new UTF8Parser()
     // 不忽略BOM

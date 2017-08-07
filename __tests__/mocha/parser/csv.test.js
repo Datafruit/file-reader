@@ -14,7 +14,7 @@ describe('CSVParser', () => {
       let str = 'a,"first,second",b'
       let result = ['a', 'first,second', 'b']
       it(`parse '${str}' should equal ${JSON.stringify(result)}`, function (done) {
-        const ret = cvs_parser.parse(UTF8Parser.stringToUTF8UInt8(str))
+        const ret = cvs_parser.parse(UTF8Parser.stringToUTF8Uint8(str))
         equal(ret.length, result.length)
         ret.forEach(function (v, i) {
           equal(
@@ -32,7 +32,7 @@ describe('CSVParser', () => {
       let str = ',,,'
       let result = ['', '', '', '']
       it(`parse '${str}' should equal ${JSON.stringify(result)}`, function (done) {
-        const ret = cvs_parser.parse(UTF8Parser.stringToUTF8UInt8(str))
+        const ret = cvs_parser.parse(UTF8Parser.stringToUTF8Uint8(str))
         equal(ret.length, result.length)
         ret.forEach(function (v, i) {
           equal(
@@ -50,7 +50,7 @@ describe('CSVParser', () => {
       let str = 'a,b,'
       let result = ['a', 'b', '']
       it(`parse '${str}' should equal ${JSON.stringify(result)}`, function (done) {
-        const buf = UTF8Parser.stringToUTF8UInt8(str)
+        const buf = UTF8Parser.stringToUTF8Uint8(str)
         const ret = cvs_parser.parse(buf)
         equal(ret.length, result.length)
         ret.forEach(function (v, i) {
@@ -69,7 +69,7 @@ describe('CSVParser', () => {
       const str = `1,"2\n3\n4",5`
       const result = ['1', '2\n3\n4', '5']
       it(`parse '${str}' should equal ${JSON.stringify(result)}'`, function (done) {
-        const ret = parser.parse(UTF8Parser.stringToUTF8UInt8(str))
+        const ret = parser.parse(UTF8Parser.stringToUTF8Uint8(str))
         equal(ret.length, result.length)
         ret.forEach(function (v, i) {
           equal(
@@ -86,7 +86,7 @@ describe('CSVParser', () => {
       const str = 'a,b,"c,d",,,,e,f,,,,j'
       const result = ['a', 'b', 'c,d', '', '', '', 'e', 'f', '', '', '', 'j']
       it(`parse '${str}' should equal ${JSON.stringify(result)}`, function (done) {
-        const ret = cvs_parser.parse(UTF8Parser.stringToUTF8UInt8(str))
+        const ret = cvs_parser.parse(UTF8Parser.stringToUTF8Uint8(str))
         equal(ret.length, result.length)
         ret.forEach(function (v, i) {
           equal(
@@ -106,7 +106,7 @@ describe('CSVParser', () => {
       it(`parse '${str}' will catch a error`, function () {
         let error = null
         try {
-          parser.parse(UTF8Parser.stringToUTF8UInt8(str))
+          parser.parse(UTF8Parser.stringToUTF8Uint8(str))
         } catch (e) {
           console.log(e.message)
           error = e

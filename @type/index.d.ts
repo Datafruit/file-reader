@@ -202,7 +202,7 @@ declare namespace Reader {
     new(): UTF8Parser
     get_point (bytes: Uint8Array, len: number): number
     unicodeToUTF8Uint8 (array: number[]): Uint8Array
-    stringToUTF8UInt8 (str: string): Uint8Array
+    stringToUTF8Uint8 (str: string): Uint8Array
   }
 
   export const UTF8Parser: UTF8ParserConstructor
