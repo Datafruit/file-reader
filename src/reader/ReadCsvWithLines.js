@@ -8,6 +8,14 @@ import { UTF8Parser } from '../parser/utf8'
 import { inherits } from '../util/util'
 
 /**
+ * @param arr
+ * @return {*}
+ */
+function toString (arr) {
+  return String.fromCharCode.apply(null, arr)
+}
+
+/**
  * @param file
  * @param {Number} lines
  * @param {LineReaderOptions} options
@@ -62,7 +70,7 @@ ReadCsvWithLines.prototype._receive = function (record) {
     r = lines[i]
     next.push({
       ...r,
-      fields: r.fields.map(f => String.fromCodePoint.apply(String, parser.parse(f).character))
+      fields: r.fields.map(f => toString(parser.parse(f).character))
     })
   }
 

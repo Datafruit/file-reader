@@ -1,5 +1,6 @@
 /**
  * Created by coin on 21/12/2016.
+ * // TODO 使用链表结构
  */
 
 /**
@@ -22,18 +23,18 @@ export class Scheduler {
     this.subscribers = []
     this.scheduled = []
   }
-  
+
   subscribe (fn) {
     this.subscribers.push(fn)
     return this
   }
-  
+
   entry (data) {
     this.buffer.push(data)
     this.dispose()
     return this
   }
-  
+
   // TODO 以进程ID的方式释放
   release (data) {
     const { scheduled } = this
@@ -44,12 +45,12 @@ export class Scheduler {
     scheduled.splice(index, 1)
     return this.dispose()
   }
-  
+
   dispose () {
     const { buffer, subscribers, scheduled, max_tasks } = this
     let data
     let state = false
-    
+
     while (scheduled.length < max_tasks && buffer.length > 0) {
       state = true
       data = buffer[0]
@@ -59,7 +60,7 @@ export class Scheduler {
     }
     return state
   }
-  
+
   /**
    * 重新装入
    * @param data
@@ -76,7 +77,7 @@ export class Scheduler {
     }
     return this
   }
-  
+
   /**
    * 任务是否排满
    * @returns {Boolean}
@@ -84,7 +85,7 @@ export class Scheduler {
   tight () {
     return this.scheduled.length > this.max_tasks
   }
-  
+
   /**
    * 缓存是否清空
    * @returns {Boolean}
@@ -92,7 +93,7 @@ export class Scheduler {
   drain () {
     return this.buffer.length === 0
   }
-  
+
   /**
    * 缓存是否装满
    * @returns {Boolean}
@@ -100,7 +101,7 @@ export class Scheduler {
   overflowed () {
     return this.buffer.length > this.max_tasks
   }
-  
+
   /**
    * 任务全部完成
    */

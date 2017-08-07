@@ -66,7 +66,7 @@ ReadLineAsUint8.prototype._listen = function () {
 /**
  * 接收到reader的数据是一个 `ArrayBuffer`,需要遍历 `ArrayBuffer` 的内容
  * 按行分割,返回包含完整行的 `Array`,并触发 `line` 与 `lines` 事件
- * @param {ArrayBuffer} array_buffer
+ * @param {Uint8Array} array_buffer
  * @return {ReadLineAsUint8}
  * @private
  */
@@ -85,7 +85,7 @@ ReadLineAsUint8.prototype._receive = function (array_buffer) {
 
 /**
  * 将接收到的 `ArrayBuffer` 组装为 `Uint8Array`
- * @param {ArrayBuffer} array_buffer
+ * @param {Uint8Array} array_buffer
  * @return {Uint8Array | null}
  * @private
  */
@@ -191,6 +191,7 @@ ReadLineAsUint8.prototype._send_lines = function (lines) {
         no: ++total_line,
         size: line.size
       })
+
       this.onReadData()
     })
 
@@ -202,6 +203,7 @@ ReadLineAsUint8.prototype._send_lines = function (lines) {
       no: total_line,
       size: total_size
     })
+
     this.onReadData()
   }
   return this

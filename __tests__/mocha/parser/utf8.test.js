@@ -49,9 +49,9 @@ describe('UTF8Parer', () => {
     })
   })
   
-  describe('.unicode_to_utf8_uint8', () => {
+  describe('.unicodeToUTF8Uint8', () => {
     let result = getString(ECODEING.UNICODE)
-    let utf8 = UTF8Parser.unicode_to_utf8_uint8(result.code_points)
+    let utf8 = UTF8Parser.unicodeToUTF8Uint8(result.code_points)
     const min = 0, max = 0b11111111
     
     it(`#unicode code:: ${JSON.stringify(result.code_points)} 
@@ -61,11 +61,11 @@ describe('UTF8Parer', () => {
     })
   })
   
-  describe('.string_to_utf8_uint8', () => {
+  describe('.stringToUTF8Uint8', () => {
     const min = 0, max = 0b11111111
     
     let result = getString(ECODEING.UNICODE)
-    let utf8_code = UTF8Parser.string_to_utf8_uint8(result.string)
+    let utf8_code = UTF8Parser.stringToUTF8Uint8(result.string)
     let array = typeArrayToArray(utf8_code)
     let parser = new UTF8Parser()
     // 不忽略BOM
