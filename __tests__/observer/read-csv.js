@@ -15,21 +15,21 @@ target.onchange = function () {
   reader = new ReadCsvAsUint8(file)
   const parser = new UTF8Parser()
   const mark = `csv.size.is.${file.size / (1 << 20)}MB`
-  
+
   reader.subscribe(
     function (record) {
       const { lines, size } = record
       let total = 0
-      
+
       lines.forEach(record => {
         const string_array = record.fields.map(field => {
           return String.fromCodePoint.apply(String, parser.parse(field).character)
         })
-        
-        console.log(string_array, record.no, record.size)
+
+        console.log('No:%s', record.no, string_array, record.size)
         total += record.size
       })
-      
+
       console.log('total => %s, size => %s', total, size)
     },
     function (error, already, read_size) {

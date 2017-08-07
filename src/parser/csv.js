@@ -62,7 +62,7 @@ export class CSVParser {
 
         // 格式错误
         if (end === -1) {
-          throw new Error(`Parse Error at: ${String.fromCharCode.apply(null, result[counter - 1])}`)
+          throw new Error(`Parse error index:${start}`)
         }
 
         next = end + 2

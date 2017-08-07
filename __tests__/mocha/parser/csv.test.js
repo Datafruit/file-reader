@@ -108,6 +108,7 @@ describe('CSVParser', () => {
         try {
           parser.parse(UTF8Parser.stringToUTF8UInt8(str))
         } catch (e) {
+          console.log(e.message)
           error = e
         }
         ok(error !== null)

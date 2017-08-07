@@ -6,6 +6,14 @@ import { ReadLineAsUint8 } from './ReadLineAsUint8'
 const LINE_MARK = ReadLineAsUint8.Type.line
 
 /**
+ * @param arr
+ * @return {*}
+ */
+function toString (arr) {
+  return String.fromCharCode.apply(null, arr)
+}
+
+/**
  * @param {File} file
  * @param {LineReaderOptions} [options]
  * @extends {BaseReader}
@@ -73,8 +81,16 @@ ReadCsvAsUint8.prototype._onNext = function (record) {
     try {
       fields = csv.parse(arr)
     } catch (e) {
-      this.onReadError({ no, body: rc.line })
-      this.stop()
+      this.pause()
+      this.onReadError(
+        {
+          no,
+          content: toString(this.utf8Parser.parse(arr).character),
+          message: e.message
+        },
+        this.reader.reader.already,
+        this.reader.options.read_size
+      )
       // skip current line
       continue
     }
