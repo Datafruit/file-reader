@@ -13,7 +13,7 @@ describe('Base64Parer', () => {
     const codes = parser.code + '='
     describe('#ascii code', () => {
       let result = getString(ECODEING.ASCII)
-      let utf8_code = UTF8Parser.unicode_to_utf8_uint8(result.code_points)
+      let utf8_code = UTF8Parser.unicodeToUTF8Uint8(result.code_points)
       let array = utf8_code.reduce((p, c) => p.concat(c), [])
       let code = parser.encode(utf8_code)
       
@@ -33,7 +33,7 @@ describe('Base64Parer', () => {
     
     describe('#unicode code', () => {
       let result = getString(ECODEING.UNICODE)
-      let utf8_code = UTF8Parser.unicode_to_utf8_uint8(result.code_points)
+      let utf8_code = UTF8Parser.unicodeToUTF8Uint8(result.code_points)
       let array = utf8_code.reduce((p, c) => p.concat(c), [])
       let code = parser.encode(utf8_code)
       

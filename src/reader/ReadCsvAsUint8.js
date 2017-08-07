@@ -3,7 +3,6 @@ import { UTF8Parser } from '../parser/utf8'
 import { inherits } from '../util/util'
 import { BaseReader } from '../base/BaseReader'
 import { ReadLineAsUint8 } from './ReadLineAsUint8'
-import { CsvCompleteLine } from '../util/CsvCompleteLine'
 const LINE_MARK = ReadLineAsUint8.Type.line
 
 /**
@@ -18,9 +17,8 @@ const ReadCsvAsUint8 = function (file, options) {
   this.file = file
   this.options = options
   this.reader = new ReadLineAsUint8(file, options)
-  this.csv_parser = new CSVParser(options.separator, options.quotation)
-  this.utf8_parser = new UTF8Parser()
-  this.checker = new CsvCompleteLine(options.quotation, options.separator)
+  this.csvParser = new CSVParser(options.separator, options.quotation)
+  this.utf8Parser = new UTF8Parser()
   this.count = 0
   this._listen()
 }
@@ -47,31 +45,44 @@ ReadCsvAsUint8.prototype._listen = function () {
  */
 ReadCsvAsUint8.prototype._onNext = function (record) {
 
-  // TODO 检测是否是完整的csv行
   const type = record.type
   if (type === LINE_MARK) return this
 
-  const { data, no, size } = record
-  const start = no - data.length + 1
-  const utf8 = this.utf8_parser
-  const csv = this.csv_parser
+  const { data, size } = record
+  const start = record.no - data.length + 1
+  const utf8 = this.utf8Parser
+  const csv = this.csvParser
 
   if (data.length === 0) return this
   if (start === 1) data[0].line = utf8.filterOutBOM(data[0].line).array
 
-  const checker = this.checker
   const lines = []
   const end = data.length
-  let i = 0, rc, arr
+
+  let i = 0, rc, arr, fields, no
+
   for (; i < end; i++) {
+    // 完整性检测太耗时，直接去csvParser中抛出错误即可
+    // 类似于 1\n2\n3 这样的段，直接扔错误
     rc = data[i]
-    arr = checker.press(rc.line)
+    arr = rc.line
     if (arr.byteLength === 0) continue
 
+    // catch parse error and stop reading
+    no = ++this.count
+    try {
+      fields = csv.parse(arr)
+    } catch (e) {
+      this.onReadError({ no, body: rc.line })
+      this.stop()
+      // skip current line
+      continue
+    }
+
     lines.push({
-      fields: csv.parse_line(arr),
+      fields,
       size: rc.size,
-      no: ++this.count
+      no
     })
   }
 

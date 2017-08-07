@@ -36,7 +36,7 @@ export class CSVParser {
    *
    * @example
    * ```JavaScript
-   * parse_line([110,97,109,101,45,48,44,110,97,109,101,45,49])
+   * parse([110,97,109,101,45,48,44,110,97,109,101,45,49])
    * // output
    * [
    *   [110,97,109,101,45,48],
@@ -44,13 +44,13 @@ export class CSVParser {
    * ]
    * ```
    */
-  parse_line (array) {
+  parse (array) {
     const separator = this.separator
     const quotation = this.quotation
     const length = array.byteLength
     const last = length - 1
     const result = []
-    let point = 0, next, code, start, end
+    let point = 0, next, code, start, end, counter = 0
 
     while (point < length) {
       code = array[point]
@@ -60,20 +60,19 @@ export class CSVParser {
         start = point + 1
         end = array.indexOf(quotation, start)
 
+        // 格式错误
         if (end === -1) {
-          throw new Error('数据格式错误: ' + String.fromCodePoint.apply(String, array))
+          throw new Error(`Parse Error at: ${String.fromCharCode.apply(null, result[counter - 1])}`)
         }
 
         next = end + 2
-      }
 
-      // ,,, => ['','','','',]
-      else if (code === separator) {
+      } else if (code === separator) {
+        // ,,, => ['','','','',]
         start = end = point
         next = point + 1
-      }
-      // first,second => ["first", "second"]
-      else {
+      } else {
+        // first,second => ["first", "second"]
         start = point
         end = array.indexOf(separator, start)
 
@@ -85,12 +84,13 @@ export class CSVParser {
         next = end + 1
       }
 
-      result.push(array.slice(start, end))
+      result[counter++] = array.slice(start, end)
       point = next
     }
 
+    // 如果最后个字符是分隔符，添加一个空字符
     if (array[last] === separator) {
-      result.push(array.slice(0, 0))
+      result[counter] = array.slice(0, 0)
     }
 
     return result

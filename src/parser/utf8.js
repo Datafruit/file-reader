@@ -222,7 +222,7 @@ export class UTF8Parser {
    * @param {Array<number>} array
    * @return {Uint8Array}
    */
-  static unicode_to_utf8_uint8 (array) {
+  static unicodeToUTF8Uint8 (array) {
     const length = array.length
     const result = dynamic_uint8_array(length * 2)
 
@@ -285,7 +285,7 @@ export class UTF8Parser {
    * @param {String} string
    * @return {Uint8Array}
    */
-  static string_to_utf8_uint8 (string) {
-    return UTF8Parser.unicode_to_utf8_uint8(UCS2Parser.decode(string))
+  static stringToUTF8UInt8 (string) {
+    return UTF8Parser.unicodeToUTF8Uint8(UCS2Parser.decode(string))
   }
 }
