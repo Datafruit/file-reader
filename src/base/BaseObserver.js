@@ -3,7 +3,7 @@
  */
 
 import { AbstractObserver } from '../abstract'
-import { noop, inherits, arrayLikeToArray, isFunction, isObject } from '../util/util'
+import { noop, inherits, isFunction, isObject } from '../util/util'
 
 /**
  * @param {Function} [onNext]
@@ -26,26 +26,35 @@ BaseObserver.prototype.next = noop
 BaseObserver.prototype.error = noop
 BaseObserver.prototype.complete = noop
 
-/** @return {BaseObserver} */
-BaseObserver.prototype.onNext = function () {
+/**
+ * @prams {*} [arg]
+ * @return {BaseObserver}
+ */
+BaseObserver.prototype.onNext = function (arg) {
   if (!this.destroyed) {
-    this.next.apply(this, arrayLikeToArray(arguments))
+    this.next(arg)
   }
   return this
 }
 
-/** @return {BaseObserver} */
-BaseObserver.prototype.onError = function () {
+/**
+ * @prams {*} [arg]
+ * @return {BaseObserver}
+ */
+BaseObserver.prototype.onError = function (arg) {
   if (!this.destroyed) {
-    this.error.apply(this, arrayLikeToArray(arguments))
+    this.error(arg)
   }
   return this
 }
 
-/** @return {BaseObserver} */
-BaseObserver.prototype.onComplete = function () {
+/**
+ * @prams {*} [arg]
+ * @return {BaseObserver}
+ */
+BaseObserver.prototype.onComplete = function (arg) {
   if (!this.destroyed) {
-    this.complete.apply(this, arrayLikeToArray(arguments))
+    this.complete(arg)
   }
   return this
 }
@@ -61,7 +70,10 @@ BaseObserver.prototype.isDestroy = function () {
   return this.destroyed
 }
 
-/** @return {Boolean} */
+/**
+ * @param {*} any
+ * @return {Boolean}
+ */
 BaseObserver.isObserver = function (any) {
   return any instanceof BaseObserver || (
       isObject(any) && (

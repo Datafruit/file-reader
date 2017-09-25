@@ -14,15 +14,17 @@ target.onchange = () => {
   const file = target.files[0]
   reader = new BrowserFileReader(file)
   const mark = `csv.size.is.${file.size / (1 << 20)}MB`
-  
+
   reader.subscribe(
-    (data, sequence) => console.log('onNext::', data, sequence),
-    (error, already, read_size) => console.log('onError::', error, already, read_size),
+    ({ data, sequence }) => {
+      console.log('onNext::', data, sequence)
+    },
+    ({ error, already, read_size }) => console.log('onError::', error, already, read_size),
     () => console.timeEnd(mark)
   )
-  
+
   console.time(mark)
-  reader.read()
+  reader.readAsDataURL()
 }
 
 pause.onclick = () => { reader && reader.pause()}

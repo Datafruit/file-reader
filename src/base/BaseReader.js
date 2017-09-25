@@ -4,7 +4,7 @@
 
 import { AbstractReader } from '../abstract'
 import { BaseObservable } from '../base/BaseObservable'
-import { inherits, arrayLikeToArray } from '../util/util'
+import { inherits } from '../util/util'
 import { Queue } from '../util/queue'
 
 /**
@@ -76,53 +76,53 @@ BaseReader.prototype.enqueue = function (data) {
 BaseReader.prototype.onReadData = function () {
   const queue = this.queue
   let prev, next, done
-  
+
   while ((next = queue.dequeue()) !== null) {
     done = this.validate(next.data, next.sequence)
-    
+
     if (!done) {
       queue.rollback()
       break
+    } else {
+      this.subscribeOnNext({ data: this.result(next.data), sequence: next.sequence })
     }
-    
-    if (done) {
-      this.subscribeOnNext(this.result(next.data), next.sequence)
-    }
-    
+
     prev = next
   }
-  
+
   if (this.isLastSnippet(prev.data, prev.sequence)) {
     this.onReadComplete()
   } else if (this.readable()) {
     this.read()
   }
-  
+
   return this
 }
 
 /**
  * @override
+ * @param {*} [arg]
  * @return {BaseReader}
  */
-BaseReader.prototype.onReadError = function () {
-  this.subscribeOnError.apply(this, arrayLikeToArray(arguments))
+BaseReader.prototype.onReadError = function (arg) {
+  this.subscribeOnError(arg)
   return this
 }
 
 /**
  * @override
+ * @param {*} [arg]
  * @return {BaseReader}
  */
-BaseReader.prototype.onReadComplete = function () {
-  this.subscribeOnComplete.apply(this, arrayLikeToArray(arguments))
+BaseReader.prototype.onReadComplete = function (arg) {
+  this.subscribeOnComplete(arg)
   return this
 }
 
 /**
  * @override
  * @param {*} data
- * @param {Number} [sequence]
+ * @param {number} [sequence]
  * @return {Boolean}
  */
 BaseReader.prototype.validate = function (data, sequence) {
@@ -132,7 +132,7 @@ BaseReader.prototype.validate = function (data, sequence) {
 /**
  * @override
  * @param {*} data
- * @param {Number} [sequence]
+ * @param {number} [sequence]
  * @return {*}
  */
 BaseReader.prototype.result = function (data, sequence) {
@@ -141,7 +141,7 @@ BaseReader.prototype.result = function (data, sequence) {
 
 /**
  * @param {*} data
- * @param {Number} [sequence]
+ * @param {number} [sequence]
  * @return {Boolean}
  */
 BaseReader.prototype.isLastSnippet = function (data, sequence) {

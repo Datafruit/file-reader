@@ -49,8 +49,10 @@ inherits(ReadLineAsUint8, BaseReader)
  */
 ReadLineAsUint8.prototype._listen = function () {
   this.reader.subscribe(
-    (array_buffer, sequence) => this._receive(array_buffer),
-    (message, already, read_size) => this.onReadError(message, already, read_size),
+    ({ data, sequence }) => {
+      this._receive(data)
+    },
+    ({ message, already, read_size }) => this.onReadError(message, already, read_size),
     () => {
       if (this.cache.length) {
         const buf = new Uint8Array(this.cache.concat(LF))

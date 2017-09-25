@@ -36,7 +36,7 @@ let FileReader
 try {
   __window = window
 } catch (e) {
-  __window = global
+  __window = global.window
 } finally {
   FileReader = __window.FileReader
 }
@@ -53,7 +53,7 @@ const BrowserFileReader = function (file, options) {
   this.options = options
   this.file = file
   this.already = 0
-  this.readType = 'readAsText'
+  this.readType = `readAs${ReadTypes.ArrayBuffer}`
 }
 
 inherits(BrowserFileReader, BaseReader)
@@ -82,7 +82,7 @@ BrowserFileReader.prototype.readAsArrayBuffer = function () {
 /** @return {BrowserFileReader} */
 BrowserFileReader.prototype.readAsDataURL = function () {
   this._setting(ReadTypes.DataURL)
-  this.options.read_size = this.file.file_size
+  this.options.read_size = this.file.size
   return this
 }
 
@@ -91,7 +91,7 @@ BrowserFileReader.prototype.readAsDataURL = function () {
  * @return {BrowserFileReader}
  */
 BrowserFileReader.prototype.read = function () {
-  return this.readAsArrayBuffer()
+  return this._read()
 }
 
 /**
@@ -116,18 +116,18 @@ BrowserFileReader.prototype._next = function () {
   const r = this
   const opt = r.options
   let start, end
-  
+
   if (r.done()) {
     return false
   }
-  
+
   start = r.already
   end = start + opt.chunk_size
-  
+
   if (end > opt.read_size) {
     end = opt.read_size
   }
-  
+
   r._slice(start, end)
   r.already = end
   return true
@@ -146,11 +146,11 @@ BrowserFileReader.prototype._slice = function (start, end) {
   const blob = file.slice(start, end)
   const reader = new FileReader()
   const record = { reader, start, end }
-  
+
   this.enqueue(record)
   reader.onerror = () => this._onReadError(record)
   reader.onloadend = () => this._onReadData()
-  
+
   reader[readType](blob, this.options.encode)
   return this
 }
@@ -168,7 +168,11 @@ BrowserFileReader.prototype.done = function () {
  * @private
  */
 BrowserFileReader.prototype._onReadError = function (record) {
-  return this.onReadError(record.reader.error, this.already, this.options.read_size)
+  return this.onReadError({
+    error: record.reader.error,
+    already: this.already,
+    read_size: this.options.read_size
+  })
 }
 
 /**

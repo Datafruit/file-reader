@@ -17,20 +17,23 @@
   "typings": "./@type/index.d.ts",
   "scripts": {
     "webpack": "./node_modules/.bin/webpack",
-    "test": "npm run webpack && ./node_modules/mocha/bin/mocha ./__tests__/dist/observer/test.js",
+    "test": "./node_modules/mocha/bin/mocha ./__tests__/index.js",
     "delete:dist": "rm -rf ./dist",
     "build": "npm run delete:dist && ./node_modules/.bin/babel src --out-dir dist --presets=es2015,stage-0",
     "prepublish": "npm run build",
     "publish": "npm run delete:dist"
   },
   "devDependencies": {
-    "typescript": "^2.4",
-    "babel-cli": "^6.2.0",
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.21.0",
     "babel-loader": "^6.2.10",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-stage-0": "^6.16.0",
+    "babel-register": "^6.26.0",
+    "jsdom": "^11.2.0",
     "mocha": "^3.2.0",
+    "typescript": "^2.4",
     "webpack": "^1.14.0"
   },
   "repository": "https://github.com/Datafruit/file-reader",
