@@ -21,8 +21,8 @@ export const QUOTATION = {
 export class CSVParser {
 
   /**
-   * @param {Number} [separator] separated of content
-   * @param {Number} [quotation] mark of content quotes
+   * @param {number} [separator] separated of content
+   * @param {number} [quotation] mark of content quotes
    */
   constructor (separator, quotation) {
     this.separator = separator || SEPARATOR.Comma
@@ -50,23 +50,31 @@ export class CSVParser {
     const length = array.byteLength
     const last = length - 1
     const result = []
-    let point = 0, next, code, start, end, counter = 0
+    let point = 0, next, code, start, end, counter = 0, find
 
     while (point < length) {
       code = array[point]
 
       // `a,"first,second",b` => ["a", "first,second", "b]
+      // `a,"first"before,after"second",b` => ['a', 'first"before,after"second', 'b']
       if (code === quotation) {
         start = point + 1
-        end = array.indexOf(quotation, start)
+        end = start
 
+        find = false
+        while (end < length) {
+          code = array[end]
+          if (code === quotation && array[end + 1] === separator) {
+            find = true
+            break
+          }
+          end++
+        }
         // 格式错误
-        if (end === -1) {
+        if (!find) {
           throw new Error(`Parse error index:${start}`)
         }
-
         next = end + 2
-
       } else if (code === separator) {
         // ,,, => ['','','','',]
         start = end = point

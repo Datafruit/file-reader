@@ -6,115 +6,59 @@ import { equal, ok } from 'assert'
 import { CSVParser } from '../../../src/parser/csv'
 import { UTF8Parser } from '../../../src/parser/utf8'
 
-describe('CSVParser', () => {
-  describe('.parse', () => {
-    // 'a,"first,second",b' => ['a', 'first,second', 'b']
-    describe('with quotation', function () {
-      const cvs_parser = new CSVParser()
-      let str = 'a,"first,second",b'
-      let result = ['a', 'first,second', 'b']
-      it(`parse '${str}' should equal ${JSON.stringify(result)}`, function (done) {
-        const ret = cvs_parser.parse(UTF8Parser.stringToUTF8Uint8(str))
-        equal(ret.length, result.length)
-        ret.forEach(function (v, i) {
-          equal(
-            String.fromCharCode.apply(String, v),
-            result[i]
-          )
-        })
-        done()
-      })
-    })
+describe('CSVParser', function () {
+  const parser = new CSVParser()
 
-    // ,,, => ['', '', '', '']
-    describe('all field is empty', function () {
-      const cvs_parser = new CSVParser()
-      let str = ',,,'
-      let result = ['', '', '', '']
-      it(`parse '${str}' should equal ${JSON.stringify(result)}`, function (done) {
-        const ret = cvs_parser.parse(UTF8Parser.stringToUTF8Uint8(str))
-        equal(ret.length, result.length)
-        ret.forEach(function (v, i) {
-          equal(
-            String.fromCharCode.apply(String, v),
-            result[i]
-          )
-        })
-        done()
-      })
-    })
+  const desc = [
+    {
+      str: 'a,"first,second",b',
+      ret: ['a', 'first,second', 'b']
+    },
+    {
+      str: 'a,"first"before,after"second",b',
+      ret: ['a', 'first"before,after"second', 'b']
+    },
+    {
+      str: ',,,',
+      ret: ['', '', '', '']
+    },
+    {
+      str: 'a,b,c',
+      ret: ['a', 'b', 'c']
+    },
+    {
+      str: 'a,,c',
+      ret: ['a', '', 'c']
+    },
+    {
+      str: 'a,"b\nc\nd",e',
+      ret: ['a', 'b\nc\nd', 'e']
+    }
+  ]
 
-    // 'a,b,' => ['a', 'b', '']
-    describe('empty field', function () {
-      const cvs_parser = new CSVParser()
-      let str = 'a,b,'
-      let result = ['a', 'b', '']
-      it(`parse '${str}' should equal ${JSON.stringify(result)}`, function (done) {
-        const buf = UTF8Parser.stringToUTF8Uint8(str)
-        const ret = cvs_parser.parse(buf)
-        equal(ret.length, result.length)
-        ret.forEach(function (v, i) {
-          equal(
-            String.fromCharCode.apply(String, v),
-            result[i]
-          )
-        })
-        done()
+  desc.forEach(function (d) {
+    it(`parse(${d.str}) will return ${JSON.stringify(d.ret)}`, function () {
+      const ret = parser.parse(UTF8Parser.stringToUTF8Uint8(d.str))
+      const arr = ret.map(function (r) {
+        return String.fromCodePoint.apply(null, r)
       })
-    })
-
-    // 1,"2\n3\n4",5 => ['1', '2\n3\n4', '5']
-    describe('multiple lines', function () {
-      const parser = new CSVParser()
-      const str = `1,"2\n3\n4",5`
-      const result = ['1', '2\n3\n4', '5']
-      it(`parse '${str}' should equal ${JSON.stringify(result)}'`, function (done) {
-        const ret = parser.parse(UTF8Parser.stringToUTF8Uint8(str))
-        equal(ret.length, result.length)
-        ret.forEach(function (v, i) {
-          equal(
-            String.fromCharCode.apply(String, v),
-            result[i]
-          )
-        })
-        done()
-      })
-    })
-
-    describe('complex', function () {
-      const cvs_parser = new CSVParser()
-      const str = 'a,b,"c,d",,,,e,f,,,,j'
-      const result = ['a', 'b', 'c,d', '', '', '', 'e', 'f', '', '', '', 'j']
-      it(`parse '${str}' should equal ${JSON.stringify(result)}`, function (done) {
-        const ret = cvs_parser.parse(UTF8Parser.stringToUTF8Uint8(str))
-        equal(ret.length, result.length)
-        ret.forEach(function (v, i) {
-          equal(
-            String.fromCharCode.apply(String, v),
-            result[i]
-          )
-        })
-        done()
-      })
-    })
-
-    // '1,"2,3' => error
-    describe('Should throw error when format error', function () {
-      const parser = new CSVParser()
-      const str = '1,"2,3'
-
-      it(`parse '${str}' will catch a error`, function () {
-        let error = null
-        try {
-          parser.parse(UTF8Parser.stringToUTF8Uint8(str))
-        } catch (e) {
-          console.log(e.message)
-          error = e
-        }
-        ok(error !== null)
-      })
+      console.log(arr)
+      equal(JSON.stringify(d.ret), JSON.stringify(arr))
     })
   })
 
+  const illegal_str = 'a,"b,c'
+  it(`parse(${illegal_str}) will throw a error`, function () {
+
+    let error = null
+    try {
+      parser.parse(UTF8Parser.stringToUTF8Uint8(illegal_str))
+    } catch (e) {
+      console.log(e.message)
+      error = e
+    }
+    ok(error !== null)
+  })
 })
+
 
