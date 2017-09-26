@@ -3,5 +3,5 @@ node_modules
 dist
 test/dist
 *.log*
-temp
+tmp
 yarn.lock
