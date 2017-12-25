@@ -13,8 +13,8 @@ target.onchange = function () {
   const file = target.files[0]
   reader = new ReadLineAsUint8(file)
   reader.subscribe(
-    function (data) {
-      
+    function ({ data }) {
+
       console.log(
         'onNext:: isLines => %s, No: => %s, size => %s, data type = > %s',
         data.type === ReadLineAsUint8.Type.lines,

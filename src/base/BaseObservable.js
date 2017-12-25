@@ -4,7 +4,7 @@
 
 import { AbstractObservable } from '../abstract'
 import { BaseObserver } from './BaseObserver'
-import { inherits, arrayLikeToArray } from '../util/util'
+import { inherits } from '../util/util'
 
 /**
  * @extends AbstractObservable
@@ -34,36 +34,39 @@ BaseObservable.prototype.subscribe = function (observerOrOnNext, onError, onComp
 
 /**
  * @override
+ * @param {*} arg
  * @return {BaseObservable}
  */
-BaseObservable.prototype.subscribeOnNext = function () {
+BaseObservable.prototype.subscribeOnNext = function (arg) {
   const observer = this.observer
   if (observer) {
-    observer.onNext.apply(observer, arrayLikeToArray(arguments))
+    observer.onNext(arg)
   }
   return this
 }
 
 /**
  * @override
+ * @param {*} arg
  * @return {BaseObservable}
  */
-BaseObservable.prototype.subscribeOnError = function () {
+BaseObservable.prototype.subscribeOnError = function (arg) {
   const observer = this.observer
   if (observer) {
-    observer.onError.apply(observer, arrayLikeToArray(arguments))
+    observer.onError(arg)
   }
   return this
 }
 
 /**
  * @override
+ * @param {*} arg
  * @return {BaseObservable}
  */
-BaseObservable.prototype.subscribeOnComplete = function () {
+BaseObservable.prototype.subscribeOnComplete = function (arg) {
   const observer = this.observer
   if (observer) {
-    observer.onComplete.apply(observer, arrayLikeToArray(arguments))
+    observer.onComplete(arg)
   }
   return this
 }

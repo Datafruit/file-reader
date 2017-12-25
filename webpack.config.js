@@ -7,7 +7,6 @@ const path = require('path')
 module.exports = {
 
   entry: {
-    'test': './__tests__/index.js',
     'file': './__tests__/observer/file-reader',
     'read-line-binary': './__tests__/observer/read-line-binary',
     'read-line-string': './__tests__/observer/read-line-string',
